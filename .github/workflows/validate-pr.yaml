@@ -1,0 +1,37 @@
+name: Pull Request Validation
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  validate:
+    runs-on: self-hosted
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build Docker image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: false
+          load: true 
+          tags: user/app:latest
+          
+      - name: Run container
+        run: docker run -d -p 8080:8080 --name astro-app user/app:latest
+
+      - name: Wait for container to be ready
+        run: sleep 10
+
+      - name: Test application
+        run: |
+          curl --fail http://localhost:8080/
+          CURL_EXIT_CODE=$?
+          docker stop astro-app
+          docker rm astro-app
+          exit $CURL_EXIT_CODE
