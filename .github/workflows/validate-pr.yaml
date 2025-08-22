@@ -1,0 +1,31 @@
+name: Pull Request Validation
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  validate:
+    runs-on: self-hosted
+    steps:
+      - uses: actions/checkout@v4
+      - name: Docker build
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          push: false
+          tags: astro-app:pr-${{ github.sha }}
+      - name: Run container
+        run: docker run -d -p 8080:8080 --name astro-app astro-app:pr-${{ github.sha }}
+
+      - name: Wait for container to be ready
+        run: sleep 10
+
+      - name: Test application
+        run: |
+          curl --fail http://localhost:8080/
+          CURL_EXIT_CODE=$?
+          docker stop astro-app
+          docker rm astro-app
+          exit $CURL_EXIT_CODE
