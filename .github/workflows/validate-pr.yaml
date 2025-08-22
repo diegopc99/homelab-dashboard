@@ -15,14 +15,15 @@ jobs:
         uses: docker/setup-buildx-action@v3
 
       - name: Build Docker image
-        uses: docker/build-push-action@v4
+        uses: docker/build-push-action@v6
         with:
           context: .
           push: false
-          tags: astro-app:pr-${{ github.sha }}
+          load: true 
+          tags: user/app:latest
           
       - name: Run container
-        run: docker run -d -p 8080:8080 --name astro-app astro-app:pr-${{ github.sha }}
+        run: docker run -d -p 8080:8080 --name astro-app user/app:latest
 
       - name: Wait for container to be ready
         run: sleep 10
