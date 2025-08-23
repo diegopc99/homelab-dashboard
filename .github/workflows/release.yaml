@@ -11,6 +11,9 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Setup docker context for buildx
+        run: docker context create builders || docker context use builders
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
         with:
