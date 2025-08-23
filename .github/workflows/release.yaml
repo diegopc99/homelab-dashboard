@@ -18,9 +18,9 @@ jobs:
         uses: docker/setup-buildx-action@v3
         with:
           endpoint: builders
-          config-inline: |
-            [registry."registry.homeserver.local"]
-              ca=["/etc/docker/certs.d/registry.homeserver.local/ca.crt"]
+          buildkitd-config-inline: |
+            [registry."${{ vars.REGISTRY_URL }}"]
+              ca=["/etc/docker/certs.d/${{ vars.REGISTRY_URL }}/ca.crt"]
 
       - name: Log in to DockerHub
         uses: docker/login-action@v3
