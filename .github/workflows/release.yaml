@@ -11,6 +11,11 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Add registry to /etc/hosts
+        run: |
+          echo "192.168.1.51 ${{ vars.REGISTRY_URL }}" | sudo tee -a /etc/hosts
+          cat /etc/hosts
+
       - name: Setup docker context for buildx
         run: docker context create builders || docker context use builders
 
