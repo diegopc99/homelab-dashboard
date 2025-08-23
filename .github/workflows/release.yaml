@@ -25,5 +25,5 @@ jobs:
         with:
           context: .
           push: true
-          tags: registry.homeserver.local/home-lab/astro-dashboard:latest
+          tags: registry.homeserver.local/home-lab/astro-dashboard:${{ github.event.release.tag_name }}
         
