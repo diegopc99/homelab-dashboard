@@ -5,6 +5,9 @@ import grafanaLogo from '../assets/grafana-logo.svg';
 import prometheusLogo from '../assets/prometheus-logo.svg';
 import wireguardLogo from '../assets/wireguard-logo.svg';
 import piholeLogo from '../assets/pihole-logo.svg';
+import argocdLogo from '../assets/argocd-logo.svg';
+import traefikLogo from '../assets/traefik-logo.svg';
+import harborLogo from '../assets/harbor-logo.svg';
 import "../styles/global.css";
 ---
 <html lang="en">
@@ -114,7 +117,7 @@ import "../styles/global.css";
           
           <a
             class="group bg-white/10 backdrop-blur-md rounded-xl border border-white/20 p-6 text-center transition-all duration-300 hover:bg-white/15 hover:border-violet-400/50 hover:scale-105 hover:shadow-2xl hover:shadow-violet-500/20 text-inherit no-underline"
-            href="https://pihole.homeserver.local/admin/login"
+            href="http://pihole.homeserver.local/admin/login"
             target="_blank"
             rel="noopener"
           >
@@ -125,6 +128,53 @@ import "../styles/global.css";
             <p class="text-violet-300 text-sm mb-3">Network Ad Blocking</p>
             <span class="inline-flex items-center text-xs text-red-400 bg-red-500/20 px-2 py-1 rounded-full">
               DNS Filter
+            </span>
+          </a>
+          <a
+            class="group bg-white/10 backdrop-blur-md rounded-xl border border-white/20 p-6 text-center transition-all duration-300 hover:bg-white/15 hover:border-violet-400/50 hover:scale-105 hover:shadow-2xl hover:shadow-violet-500/20 text-inherit no-underline"
+            href="https://argocd.homeserver.local"
+            target="_blank"
+            rel="noopener"
+          >
+            <div class="w-12 h-12 mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
+              <Image src={argocdLogo} alt="ArgoCD Logo" class="w-full h-full"/>
+            </div>
+            <h3 class="font-bold text-lg text-white mb-2">ArgoCD</h3>
+            <p class="text-violet-300 text-sm mb-3">GitOps Continuous Delivery</p>
+            <span class="inline-flex items-center text-xs text-cyan-400 bg-cyan-500/20 px-2 py-1 rounded-full">
+              GitOps
+            </span>
+          </a>
+
+          <a
+            class="group bg-white/10 backdrop-blur-md rounded-xl border border-white/20 p-6 text-center transition-all duration-300 hover:bg-white/15 hover:border-violet-400/50 hover:scale-105 hover:shadow-2xl hover:shadow-violet-500/20 text-inherit no-underline"
+            href="https://traefik.homeserver.local/dashboard/"
+            target="_blank"
+            rel="noopener"
+          >
+            <div class="w-12 h-12 mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
+              <Image src={traefikLogo} alt="Traefik Logo" class="w-full h-full"/>
+            </div>
+            <h3 class="font-bold text-lg text-white mb-2">Traefik</h3>
+            <p class="text-violet-300 text-sm mb-3">Ingress Controller Dashboard</p>
+            <span class="inline-flex items-center text-xs text-orange-400 bg-orange-500/20 px-2 py-1 rounded-full">
+              Ingress
+            </span>
+          </a>
+
+          <a
+            class="group bg-white/10 backdrop-blur-md rounded-xl border border-white/20 p-6 text-center transition-all duration-300 hover:bg-white/15 hover:border-violet-400/50 hover:scale-105 hover:shadow-2xl hover:shadow-violet-500/20 text-inherit no-underline"
+            href="https://registry.homeserver.local"
+            target="_blank"
+            rel="noopener"
+          >
+            <div class="w-12 h-12 mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
+              <Image src={harborLogo} alt="Harbor Logo" class="w-full h-full"/>
+            </div>
+            <h3 class="font-bold text-lg text-white mb-2">Harbor Registry</h3>
+            <p class="text-violet-300 text-sm mb-3">Container Image Registry</p>
+            <span class="inline-flex items-center text-xs text-teal-400 bg-teal-500/20 px-2 py-1 rounded-full">
+              Registry
             </span>
           </a>
         </div>
