@@ -1,15 +1,10 @@
 ---
 import logo from '../assets/logo.png';
 import { Image } from 'astro:assets';
-import grafanaLogo from '../assets/grafana-logo.svg';
-import prometheusLogo from '../assets/prometheus-logo.svg';
-import wireguardLogo from '../assets/wireguard-logo.svg';
-import piholeLogo from '../assets/pihole-logo.svg';
-import argocdLogo from '../assets/argocd-logo.svg';
-import traefikLogo from '../assets/traefik-logo.svg';
-import harborLogo from '../assets/harbor-logo.svg';
+import ServiceCards from './Cards.astro';
 import "../styles/global.css";
 ---
+
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -31,12 +26,7 @@ import "../styles/global.css";
               <p class="text-violet-300 text-sm">Infrastructure Management</p>
             </div>
           </div>
-          <div class="flex items-center gap-4">
-            <input
-              type="text"
-              placeholder="Search services..."
-              class="px-4 py-2 rounded-lg border border-violet-500/30 min-w-[280px] text-white bg-white/10 backdrop-blur-sm placeholder-violet-300 focus:outline-none focus:ring-2 focus:ring-violet-400 focus:border-transparent"
-            />
+          <div class="flex items-center gap-4 relative">
             <a
               href="https://github.com/diegopc99"
               target="_blank"
@@ -44,15 +34,26 @@ import "../styles/global.css";
               class="ml-2"
               aria-label="GitHub"
             >
-              <svg class="w-7 h-7 text-white hover:text-violet-400 transition-colors" fill="currentColor" viewBox="0 0 24 24">
-                <path fill-rule="evenodd" clip-rule="evenodd"
-                  d="M12 2C6.477 2 2 6.484 2 12.021c0 4.428 2.865 8.184 6.839 9.504.5.092.682-.217.682-.483 0-.237-.009-.868-.014-1.703-2.782.605-3.369-1.342-3.369-1.342-.454-1.154-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.004.07 1.532 1.032 1.532 1.032.892 1.53 2.341 1.088 2.91.832.091-.647.35-1.088.636-1.339-2.221-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.025A9.564 9.564 0 0 1 12 6.844c.85.004 1.705.115 2.504.337 1.909-1.295 2.748-1.025 2.748-1.025.546 1.378.202 2.397.1 2.65.64.7 1.028 1.595 1.028 2.688 0 3.847-2.337 4.695-4.566 4.944.359.309.678.919.678 1.852 0 1.336-.012 2.417-.012 2.747 0 .268.18.579.688.481C19.138 20.2 22 16.447 22 12.021 22 6.484 17.523 2 12 2z"
-                />
-              </svg>
+              <img src="/github-logo.svg" alt="GitHub" class="w-7 h-7 hover:opacity-80 transition-opacity" />
             </a>
-            <div class="w-8 h-8 bg-violet-600 rounded-full flex items-center justify-center text-white text-sm font-semibold">
-              D
-            </div>
+            <a
+              href="https://www.linkedin.com/in/diego-prieto-carrete"
+              target="_blank"
+              rel="noopener"
+              class="ml-2"
+              aria-label="LinkedIn"
+            >
+              <img src="/linkedin-logo.svg" alt="LinkedIn" class="bg-white rounded-md w-7 h-7 hover:opacity-80 transition-opacity" />
+            </a>
+            <a
+              href="https://gmail.com"
+              target="_blank"
+              rel="noopener"
+              class="ml-2"
+              aria-label="Gmail"
+            >
+              <img src="/gmail-logo.svg" alt="Gmail" class="w-7 h-7 hover:opacity-80 transition-opacity" />
+            </a>
           </div>
         </div>
       </div>
@@ -65,119 +66,7 @@ import "../styles/global.css";
           <h2 class="text-3xl font-bold text-white mb-2">Infrastructure Services</h2>
           <p class="text-violet-300">Monitor and manage your homelab infrastructure</p>
         </div>
-        
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          <a
-            class="group bg-white/10 backdrop-blur-md rounded-xl border border-white/20 p-6 text-center transition-all duration-300 hover:bg-white/15 hover:border-violet-400/50 hover:scale-105 hover:shadow-2xl hover:shadow-violet-500/20 text-inherit no-underline"
-            href="https://monitoring.homeserver.local/grafana"
-            target="_blank"
-            rel="noopener"
-          >
-            <div class="w-12 h-12 mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
-              <Image src={grafanaLogo} alt="Grafana Logo" class="w-full h-full"/>
-            </div>
-            <h3 class="font-bold text-lg text-white mb-2">Grafana</h3>
-            <p class="text-violet-300 text-sm mb-3">Metrics & Dashboards</p>
-            <span class="inline-flex items-center text-xs text-violet-400 bg-violet-500/20 px-2 py-1 rounded-full">
-              Analytics
-            </span>
-          </a>
-          
-          <a
-            class="group bg-white/10 backdrop-blur-md rounded-xl border border-white/20 p-6 text-center transition-all duration-300 hover:bg-white/15 hover:border-violet-400/50 hover:scale-105 hover:shadow-2xl hover:shadow-violet-500/20 text-inherit no-underline"
-            href="https://monitoring.homeserver.local/prometheus"
-            target="_blank"
-            rel="noopener"
-          >
-            <div class="w-12 h-12 mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
-              <Image src={prometheusLogo} alt="Prometheus Logo" class="w-full h-full"/>
-            </div>
-            <h3 class="font-bold text-lg text-white mb-2">Prometheus</h3>
-            <p class="text-violet-300 text-sm mb-3">Monitoring & Alerts</p>
-            <span class="inline-flex items-center text-xs text-emerald-400 bg-emerald-500/20 px-2 py-1 rounded-full">
-              Monitoring
-            </span>
-          </a>
-          
-          <a
-            class="group bg-white/10 backdrop-blur-md rounded-xl border border-white/20 p-6 text-center transition-all duration-300 hover:bg-white/15 hover:border-violet-400/50 hover:scale-105 hover:shadow-2xl hover:shadow-violet-500/20 text-inherit no-underline"
-            href="https://vpn.homeserver.local"
-            target="_blank"
-            rel="noopener"
-          >
-            <div class="w-12 h-12 mx-auto mb-4 group-hover:scale-110 transition-transform duration-300 brightness-150">
-              <Image src={wireguardLogo} alt="WireGuard Logo" class="w-full h-full"/>
-            </div>
-            <h3 class="font-bold text-lg text-white mb-2">VPN Dashboard</h3>
-            <p class="text-violet-300 text-sm mb-3">Remote Access</p>
-            <span class="inline-flex items-center text-xs text-blue-400 bg-blue-500/20 px-2 py-1 rounded-full">
-              Security
-            </span>
-          </a>
-          
-          <a
-            class="group bg-white/10 backdrop-blur-md rounded-xl border border-white/20 p-6 text-center transition-all duration-300 hover:bg-white/15 hover:border-violet-400/50 hover:scale-105 hover:shadow-2xl hover:shadow-violet-500/20 text-inherit no-underline"
-            href="http://pihole.homeserver.local/admin/login"
-            target="_blank"
-            rel="noopener"
-          >
-            <div class="w-12 h-12 mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
-              <Image src={piholeLogo} alt="Pi-hole Logo" class="w-full h-full"/>
-            </div>
-            <h3 class="font-bold text-lg text-white mb-2">Pi-hole</h3>
-            <p class="text-violet-300 text-sm mb-3">Network Ad Blocking</p>
-            <span class="inline-flex items-center text-xs text-red-400 bg-red-500/20 px-2 py-1 rounded-full">
-              DNS Filter
-            </span>
-          </a>
-          <a
-            class="group bg-white/10 backdrop-blur-md rounded-xl border border-white/20 p-6 text-center transition-all duration-300 hover:bg-white/15 hover:border-violet-400/50 hover:scale-105 hover:shadow-2xl hover:shadow-violet-500/20 text-inherit no-underline"
-            href="https://argocd.homeserver.local"
-            target="_blank"
-            rel="noopener"
-          >
-            <div class="w-12 h-12 mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
-              <Image src={argocdLogo} alt="ArgoCD Logo" class="w-full h-full"/>
-            </div>
-            <h3 class="font-bold text-lg text-white mb-2">ArgoCD</h3>
-            <p class="text-violet-300 text-sm mb-3">GitOps Continuous Delivery</p>
-            <span class="inline-flex items-center text-xs text-cyan-400 bg-cyan-500/20 px-2 py-1 rounded-full">
-              GitOps
-            </span>
-          </a>
-
-          <a
-            class="group bg-white/10 backdrop-blur-md rounded-xl border border-white/20 p-6 text-center transition-all duration-300 hover:bg-white/15 hover:border-violet-400/50 hover:scale-105 hover:shadow-2xl hover:shadow-violet-500/20 text-inherit no-underline"
-            href="https://traefik.homeserver.local/dashboard/"
-            target="_blank"
-            rel="noopener"
-          >
-            <div class="w-12 h-12 mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
-              <Image src={traefikLogo} alt="Traefik Logo" class="w-full h-full"/>
-            </div>
-            <h3 class="font-bold text-lg text-white mb-2">Traefik</h3>
-            <p class="text-violet-300 text-sm mb-3">Ingress Controller Dashboard</p>
-            <span class="inline-flex items-center text-xs text-orange-400 bg-orange-500/20 px-2 py-1 rounded-full">
-              Ingress
-            </span>
-          </a>
-
-          <a
-            class="group bg-white/10 backdrop-blur-md rounded-xl border border-white/20 p-6 text-center transition-all duration-300 hover:bg-white/15 hover:border-violet-400/50 hover:scale-105 hover:shadow-2xl hover:shadow-violet-500/20 text-inherit no-underline"
-            href="https://registry.homeserver.local"
-            target="_blank"
-            rel="noopener"
-          >
-            <div class="w-12 h-12 mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
-              <Image src={harborLogo} alt="Harbor Logo" class="w-full h-full"/>
-            </div>
-            <h3 class="font-bold text-lg text-white mb-2">Harbor Registry</h3>
-            <p class="text-violet-300 text-sm mb-3">Container Image Registry</p>
-            <span class="inline-flex items-center text-xs text-teal-400 bg-teal-500/20 px-2 py-1 rounded-full">
-              Registry
-            </span>
-          </a>
-        </div>
+        <ServiceCards />
       </div>
     </main>
   </body>
