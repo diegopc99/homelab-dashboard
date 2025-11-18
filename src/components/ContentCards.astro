@@ -1,0 +1,27 @@
+---
+import { contentServices } from '../data/services';
+---
+
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+  {contentServices.map((service) => (
+    <a
+      href={service.href}
+      target="_blank"
+      rel="noopener"
+      data-service-name={service.name}
+      class="relative group bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-6 hover:bg-white/10 hover:border-violet-500/50 transition-all duration-300 hover:shadow-xl hover:shadow-violet-500/20 hover:scale-105"
+    >
+      {/* Status Indicator */}
+      <div class="status-indicator absolute top-3 right-3 w-3 h-3 bg-gray-400 rounded-full"></div>
+      
+      <div class="flex flex-col items-center text-center">
+        <img src={service.logo} alt={service.name} class="w-16 h-16 mb-4 object-contain" />
+        <h3 class="text-lg font-semibold text-white mb-2 group-hover:text-violet-300 transition-colors">{service.name}</h3>
+        <p class="text-violet-300 text-sm mb-3">{service.description}</p>
+        <span class={`text-xs px-3 py-1 rounded-full ${service.tagClass}`}>
+          {service.tag}
+        </span>
+      </div>
+    </a>
+  ))}
+</div>

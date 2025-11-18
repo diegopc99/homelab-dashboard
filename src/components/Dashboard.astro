@@ -1,7 +1,9 @@
 ---
 import logo from '../assets/logo.png';
 import { Image } from 'astro:assets';
-import ServiceCards from './Cards.astro';
+import InfrastructureCards from './InfrastructureCards.astro';
+import ContentCards from './ContentCards.astro';
+import ServiceSearch from './Search.astro';
 import "../styles/global.css";
 ---
 
@@ -12,27 +14,99 @@ import "../styles/global.css";
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" href="/logo.png" />
   </head>
-  <body class="relative min-h-screen font-sans m-0 overflow-hidden bg-gradient-to-br from-slate-900 via-violet-900 to-purple-950">
+  <body class="relative min-h-screen font-sans m-0 overflow-x-hidden flex flex-col">
+    {/* Professional Grid Background */}
+    <div class="fixed inset-0 -z-10 bg-slate-900">
+      {/* Gradient overlay */}
+      <div class="absolute inset-0 bg-gradient-to-br from-slate-800 via-slate-900 to-slate-950"></div>
+      
+      {/* Grid pattern */}
+      <div class="absolute inset-0 bg-grid-pattern opacity-25"></div>
+      
+      {/* Radial gradient spotlight effect */}
+      <div class="absolute inset-0 bg-gradient-radial from-violet-900/25 via-transparent to-transparent"></div>
+      
+      {/* Animated gradient orbs */}
+      <div class="absolute top-0 left-1/4 w-96 h-96 bg-violet-600/35 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-float"></div>
+      <div class="absolute top-1/3 right-1/4 w-96 h-96 bg-blue-600/35 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-float animation-delay-2000"></div>
+      <div class="absolute bottom-0 left-1/2 w-96 h-96 bg-purple-600/35 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-float animation-delay-4000"></div>
+      
+      {/* Subtle noise texture */}
+      <div class="absolute inset-0 bg-noise opacity-5"></div>
+      
+      {/* Top gradient fade */}
+      <div class="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-slate-900 to-transparent"></div>
+    </div>
+
     {/* Header */}
-    <header class="relative z-10 bg-white/5 backdrop-blur-md border-b border-white/10">
+    <header class="fixed top-0 left-0 right-0 z-50 bg-slate-900/70 backdrop-blur-xl border-b border-white/5 shadow-2xl">
       <div class="max-w-7xl mx-auto px-6 py-4">
-        <div class="flex items-center justify-between">
-          <div class="flex items-center gap-4">
-            <Image src={logo} alt="HomeLab Logo" class="h-12 w-auto drop-shadow-lg"/>
+        <div class="flex items-center justify-between gap-8">
+          {/* Logo and Title */}
+          <div class="flex items-center gap-4 flex-shrink-0">
+            <Image src={logo} alt="HomeLab Logo" class="h-12 w-auto drop-shadow-2xl"/>
             <div>
               <h1 class="text-2xl font-bold text-white tracking-tight" style="font-family: 'DistantGalaxy', sans-serif;">
                 HomeLab Dashboard
               </h1>
-              <p class="text-violet-300 text-sm">Infrastructure Management</p>
             </div>
           </div>
-          <div class="flex items-center gap-4 relative">
+
+          {/* Stats in the middle */}
+          <div class="flex-1 max-w-2xl">
+            <div class="grid grid-cols-3 gap-3">
+              <div class="flex items-center gap-2 bg-white/5 backdrop-blur-sm rounded-lg px-3 py-2 border border-white/5">
+                <div class="w-8 h-8 rounded-lg bg-emerald-500/20 flex items-center justify-center flex-shrink-0">
+                  <svg class="w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                  </svg>
+                </div>
+                <div>
+                  <p class="text-[10px] text-slate-400">Online</p>
+                  <p class="text-sm font-bold text-white">
+                    <span id="online-count" class="text-emerald-400">0</span>/<span id="total-count">9</span>
+                  </p>
+                </div>
+              </div>
+              <div class="flex items-center gap-2 bg-white/5 backdrop-blur-sm rounded-lg px-3 py-2 border border-white/5">
+                <div class="w-8 h-8 rounded-lg bg-red-500/20 flex items-center justify-center flex-shrink-0">
+                  <svg class="w-5 h-5 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                  </svg>
+                </div>
+                <div>
+                  <p class="text-[10px] text-slate-400">Down</p>
+                  <p class="text-sm font-bold text-white">
+                    <span id="offline-count" class="text-red-400">0</span>
+                  </p>
+                </div>
+              </div>
+              <div class="flex items-center gap-2 bg-white/5 backdrop-blur-sm rounded-lg px-3 py-2 border border-white/5">
+                <div class="w-8 h-8 rounded-lg bg-blue-500/20 flex items-center justify-center flex-shrink-0">
+                  <svg class="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                  </svg>
+                </div>
+                <div>
+                  <p class="text-[10px] text-slate-400">Response</p>
+                  <p class="text-sm font-bold text-white">
+                    <span id="avg-response">--</span>ms
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Social Links */}
+          <div class="flex items-center gap-4 relative flex-shrink-0">
+            <ServiceSearch />
+            <div class="h-8 w-px bg-white/10"></div>
             <a
               href="https://github.com/diegopc99"
               target="_blank"
               rel="noopener"
-              class="ml-2"
               aria-label="GitHub"
+              class="hover:scale-110 transition-transform"
             >
               <img src="/github-logo.svg" alt="GitHub" class="w-7 h-7 hover:opacity-80 transition-opacity" />
             </a>
@@ -40,17 +114,17 @@ import "../styles/global.css";
               href="https://www.linkedin.com/in/diego-prieto-carrete"
               target="_blank"
               rel="noopener"
-              class="ml-2"
               aria-label="LinkedIn"
+              class="hover:scale-110 transition-transform"
             >
               <img src="/linkedin-logo.svg" alt="LinkedIn" class="bg-white rounded-md w-7 h-7 hover:opacity-80 transition-opacity" />
             </a>
             <a
-              href="https://gmail.com"
+              href="mailto:diegopc99@gmail.com"
               target="_blank"
               rel="noopener"
-              class="ml-2"
               aria-label="Gmail"
+              class="hover:scale-110 transition-transform"
             >
               <img src="/gmail-logo.svg" alt="Gmail" class="w-7 h-7 hover:opacity-80 transition-opacity" />
             </a>
@@ -60,14 +134,227 @@ import "../styles/global.css";
     </header>
 
     {/* Main Content */}
-    <main class="relative z-10 px-6 py-8">
+    <main class="relative z-10 px-6 py-8 mt-[88px] flex-grow">
       <div class="max-w-7xl mx-auto">
         <div class="mb-8">
-          <h2 class="text-3xl font-bold text-white mb-2">Infrastructure Services</h2>
-          <p class="text-violet-300">Monitor and manage your homelab infrastructure</p>
+          <h2 class="text-3xl font-bold text-white mb-2">Infrastructure</h2>
+          <p class="text-slate-400">Core infrastructure and network services</p>
         </div>
-        <ServiceCards />
+        <InfrastructureCards />
+
+        <div class="mb-8 mt-16">
+          <h2 class="text-3xl font-bold text-white mb-2">Applications</h2>
+          <p class="text-slate-400">Self-hosted applications and services</p>
+        </div>
+        <ContentCards />
       </div>
     </main>
+
+    {/* Footer */}
+    <footer class="relative z-10 bg-slate-900/70 backdrop-blur-xl border-t border-white/5 mt-auto">
+      <div class="max-w-7xl mx-auto px-6 py-4">
+        <div class="flex items-center justify-between text-sm">
+          <p class="text-slate-400">© 2025 Diego Prieto. All rights reserved.</p>
+          <div class="flex items-center gap-2">
+            <span id="health-indicator" class="w-2 h-2 bg-yellow-400 rounded-full animate-pulse"></span>
+            <span id="health-text" class="text-slate-400">Checking status...</span>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <style>
+      @keyframes float {
+        0%, 100% { 
+          transform: translate(0, 0) scale(1);
+          opacity: 0.7;
+        }
+        33% { 
+          transform: translate(30px, -30px) scale(1.05);
+          opacity: 0.8;
+        }
+        66% { 
+          transform: translate(-20px, 20px) scale(0.95);
+          opacity: 0.6;
+        }
+      }
+
+      .animate-float {
+        animation: float 20s ease-in-out infinite;
+      }
+
+      .animation-delay-2000 {
+        animation-delay: 7s;
+      }
+
+      .animation-delay-4000 {
+        animation-delay: 14s;
+      }
+
+      .bg-grid-pattern {
+        background-image: 
+          linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+        background-size: 50px 50px;
+      }
+
+      .bg-gradient-radial {
+        background: radial-gradient(circle at 50% 0%, rgba(139, 92, 246, 0.15), transparent 50%);
+      }
+
+      .bg-noise {
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+      }
+
+      /* Custom scrollbar */
+      ::-webkit-scrollbar {
+        width: 10px;
+      }
+
+      ::-webkit-scrollbar-track {
+        background: rgba(15, 23, 42, 0.5);
+      }
+
+      ::-webkit-scrollbar-thumb {
+        background: rgba(139, 92, 246, 0.3);
+        border-radius: 5px;
+      }
+
+      ::-webkit-scrollbar-thumb:hover {
+        background: rgba(139, 92, 246, 0.5);
+      }
+    </style>
+
+    <script>
+      import { services } from '../data/services';
+
+      interface ServiceStatus {
+        name: string;
+        url: string;
+        online: boolean;
+        responseTime: number;
+      }
+
+      let serviceStatuses: ServiceStatus[] = [];
+
+      async function checkServiceStatus(url: string, timeout = 5000): Promise<{ online: boolean; responseTime: number }> {
+        const startTime = performance.now();
+        
+        try {
+          const controller = new AbortController();
+          const timeoutId = setTimeout(() => controller.abort(), timeout);
+          
+          const response = await fetch(url, {
+            method: 'HEAD',
+            mode: 'no-cors',
+            signal: controller.signal,
+          });
+          
+          clearTimeout(timeoutId);
+          const endTime = performance.now();
+          const responseTime = Math.round(endTime - startTime);
+          
+          return { online: true, responseTime };
+        } catch (error) {
+          try {
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), timeout);
+            
+            await fetch(url, {
+              method: 'GET',
+              mode: 'no-cors',
+              signal: controller.signal,
+            });
+            
+            clearTimeout(timeoutId);
+            const endTime = performance.now();
+            const responseTime = Math.round(endTime - startTime);
+            
+            return { online: true, responseTime };
+          } catch {
+            return { online: false, responseTime: 0 };
+          }
+        }
+      }
+
+      async function checkAllServices() {
+        const statusPromises = services.map(async (service) => {
+          const status = await checkServiceStatus(service.href);
+          return {
+            name: service.name,
+            url: service.href,
+            ...status,
+          };
+        });
+
+        serviceStatuses = await Promise.all(statusPromises);
+        updateDashboard();
+      }
+
+      function updateDashboard() {
+        const onlineServices = serviceStatuses.filter(s => s.online);
+        const offlineServices = serviceStatuses.filter(s => !s.online);
+        
+        const onlineCount = onlineServices.length;
+        const totalCount = serviceStatuses.length;
+        const offlineCount = offlineServices.length;
+        
+        const avgResponse = onlineServices.length > 0
+          ? Math.round(onlineServices.reduce((sum, s) => sum + s.responseTime, 0) / onlineServices.length)
+          : 0;
+
+        // Update counters
+        const onlineCountEl = document.getElementById('online-count');
+        const totalCountEl = document.getElementById('total-count');
+        const offlineCountEl = document.getElementById('offline-count');
+        const avgResponseEl = document.getElementById('avg-response');
+        const healthIndicatorEl = document.getElementById('health-indicator');
+        const healthTextEl = document.getElementById('health-text');
+
+        if (onlineCountEl) onlineCountEl.textContent = onlineCount.toString();
+        if (totalCountEl) totalCountEl.textContent = totalCount.toString();
+        if (offlineCountEl) offlineCountEl.textContent = offlineCount.toString();
+        if (avgResponseEl) avgResponseEl.textContent = avgResponse > 0 ? avgResponse.toString() : '--';
+
+        // Update system status
+        if (offlineCount === 0) {
+          if (healthIndicatorEl) {
+            healthIndicatorEl.className = 'w-2 h-2 bg-emerald-400 rounded-full animate-pulse';
+          }
+          if (healthTextEl) healthTextEl.textContent = 'All services operational';
+        } else if (offlineCount < totalCount) {
+          if (healthIndicatorEl) {
+            healthIndicatorEl.className = 'w-2 h-2 bg-yellow-400 rounded-full animate-pulse';
+          }
+          if (healthTextEl) healthTextEl.textContent = 'Partial outage detected';
+        } else {
+          if (healthIndicatorEl) {
+            healthIndicatorEl.className = 'w-2 h-2 bg-red-400 rounded-full animate-pulse';
+          }
+          if (healthTextEl) healthTextEl.textContent = 'Services unavailable';
+        }
+
+        // Update service cards status indicators
+        serviceStatuses.forEach(status => {
+          const cards = document.querySelectorAll(`[data-service-name="${status.name}"]`);
+          cards.forEach(card => {
+            const indicator = card.querySelector('.status-indicator');
+            if (indicator) {
+              if (status.online) {
+                indicator.className = 'status-indicator absolute top-3 right-3 w-3 h-3 bg-emerald-400 rounded-full shadow-lg shadow-emerald-400/50 animate-pulse';
+              } else {
+                indicator.className = 'status-indicator absolute top-3 right-3 w-3 h-3 bg-red-400 rounded-full shadow-lg shadow-red-400/50';
+              }
+            }
+          });
+        });
+      }
+
+      // Check services on load
+      checkAllServices();
+
+      // Check services every 30 seconds
+      setInterval(checkAllServices, 30000);
+    </script>
   </body>
 </html>

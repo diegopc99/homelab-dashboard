@@ -1,0 +1,172 @@
+---
+import { services } from '../data/services';
+---
+
+<div class="relative">
+  <button
+    id="search-button"
+    class="flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-md rounded-lg border border-white/20 hover:bg-white/15 transition-all"
+    aria-label="Search services"
+  >
+    <svg class="w-5 h-5 text-violet-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+    </svg>
+    <span class="text-violet-300 text-sm hidden md:inline">Search</span>
+  </button>
+</div>
+
+<!-- Modal moved outside to be a direct child of body -->
+<div
+  id="search-modal"
+  class="hidden fixed inset-0 bg-black/50 backdrop-blur-sm z-[60] items-start justify-center pt-20"
+  style="display: none;"
+>
+  <div id="search-content" class="bg-slate-900/95 backdrop-blur-md rounded-xl border border-white/20 w-full max-w-2xl mx-4 shadow-2xl">
+    <div class="p-4 border-b border-white/10">
+      <input
+        id="search-input"
+        type="text"
+        placeholder="Search services... (Ctrl+K)"
+        class="w-full bg-white/10 text-white placeholder-violet-300 px-4 py-3 rounded-lg border border-white/20 focus:outline-none focus:border-violet-400 transition-colors"
+        autocomplete="off"
+      />
+    </div>
+    <div id="search-results" class="max-h-96 overflow-y-auto p-2 custom-scrollbar">
+      {/* Results will be populated by JavaScript */}
+    </div>
+  </div>
+</div>
+
+<style>
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 4px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: rgba(139, 92, 246, 0.5);
+    border-radius: 4px;
+    transition: background 0.3s ease;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: rgba(139, 92, 246, 0.7);
+  }
+
+  /* Firefox scrollbar */
+  .custom-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(139, 92, 246, 0.5) rgba(255, 255, 255, 0.05);
+  }
+
+  #search-modal {
+    pointer-events: auto;
+  }
+
+  #search-modal.show {
+    display: flex !important;
+  }
+</style>
+
+<script>
+  import { services } from "../data/services";
+
+  const searchButton = document.getElementById('search-button');
+  const searchModal = document.getElementById('search-modal');
+  const searchContent = document.getElementById('search-content');
+  const searchInput = document.getElementById('search-input') as HTMLInputElement;
+  const searchResults = document.getElementById('search-results');
+
+  function renderResults(filteredServices: typeof services) {
+    if (!searchResults) return;
+
+    if (filteredServices.length === 0) {
+      searchResults.innerHTML = `
+        <div class="text-center py-8 text-violet-300">
+          No services found
+        </div>
+      `;
+      return;
+    }
+
+    searchResults.innerHTML = filteredServices
+      .map(
+        (service) => `
+        <a
+          href="${service.href}"
+          target="_blank"
+          rel="noopener"
+          class="block p-4 hover:bg-white/10 rounded-lg transition-colors group"
+        >
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <img src="${service.logo}" alt="${service.name}" class="w-8 h-8 object-contain" />
+              <div>
+                <h3 class="text-white font-semibold group-hover:text-violet-400 transition-colors">${service.name}</h3>
+                <p class="text-violet-300 text-sm">${service.description}</p>
+              </div>
+            </div>
+            <span class="text-xs text-violet-400 bg-violet-500/20 px-2 py-1 rounded-full">${service.tag}</span>
+          </div>
+        </a>
+      `
+      )
+      .join('');
+  }
+
+  function closeModal() {
+    searchModal?.classList.remove('show');
+    searchModal?.classList.add('hidden');
+    if (searchInput) searchInput.value = '';
+  }
+
+  function openModal() {
+    searchModal?.classList.remove('hidden');
+    searchModal?.classList.add('show');
+    setTimeout(() => searchInput?.focus(), 100);
+    renderResults(services);
+  }
+
+  searchButton?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    openModal();
+  });
+
+  // Close when clicking anywhere on the modal backdrop
+  searchModal?.addEventListener('click', (e) => {
+    if (e.target === searchModal) {
+      closeModal();
+    }
+  });
+
+  // Prevent clicks inside content from closing modal
+  searchContent?.addEventListener('click', (e) => {
+    e.stopPropagation();
+  });
+
+  searchInput?.addEventListener('input', (e) => {
+    const query = (e.target as HTMLInputElement).value.toLowerCase();
+    const filtered = services.filter(
+      (service) =>
+        service.name.toLowerCase().includes(query) ||
+        service.description.toLowerCase().includes(query) ||
+        service.tag.toLowerCase().includes(query)
+    );
+    renderResults(filtered);
+  });
+
+  // Keyboard shortcuts
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && searchModal?.classList.contains('show')) {
+      closeModal();
+    }
+    if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+      e.preventDefault();
+      openModal();
+    }
+  });
+</script>
