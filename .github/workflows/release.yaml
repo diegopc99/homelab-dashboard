@@ -25,11 +25,21 @@ jobs:
           endpoint: builders
           driver-opts: |
             network=host
-          buildkitd-config-inline: |
+            image=moby/buildkit:latest
+          buildkitd-flags: |
+            --allow-insecure-entitlement network.host
+          config-inline: |
             [registry."${{ vars.REGISTRY_URL }}"]
-              ca=["/etc/docker/certs.d/${{ vars.REGISTRY_URL }}/ca.crt"]
+              ca=["/etc/ssl/certs/registry-ca.crt"]
 
-      - name: Log in to DockerHub
+      - name: Copy CA certificate to buildx container
+        run: |
+          BUILDER_NAME=$(docker buildx ls | grep builders | awk '{print $1}')
+          CONTAINER_NAME="buildx_buildkit_${BUILDER_NAME}0"
+          docker cp /etc/docker/certs.d/${{ vars.REGISTRY_URL }}/ca.crt ${CONTAINER_NAME}:/etc/ssl/certs/registry-ca.crt
+          docker exec ${CONTAINER_NAME} update-ca-certificates || true
+
+      - name: Log in to Registry
         uses: docker/login-action@v3
         with:
           registry: ${{ vars.REGISTRY_URL }}
@@ -45,5 +55,7 @@ jobs:
           build-args: |
             BUILDKIT_CONTEXT_KEEP_GIT_DIR=1
           network: host
+          allow: network.host
+
 
 
