@@ -40,3 +40,5 @@ jobs:
           context: .
           push: true
           tags: ${{ vars.REGISTRY_URL }}/home-lab/${{ github.event.repository.name }}:${{ github.event.release.tag_name }}
+          buildx-options: --add-host=${{ vars.REGISTRY_URL }}:192.168.1.51
+
